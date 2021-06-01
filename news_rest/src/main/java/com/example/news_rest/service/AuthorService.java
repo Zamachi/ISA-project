@@ -64,6 +64,7 @@ public class AuthorService implements IAuthorService, UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Author author = authorRepository.findByUsername(s);
 
+
         if (author == null){
             throw new UsernameNotFoundException("Author not found!");
         }

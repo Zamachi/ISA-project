@@ -1,0 +1,147 @@
+<section
+  fxLayout="column"
+  fxLayoutAlign="top center"
+  fxLayoutGap="20px"
+  style="height: calc(100% + 300px)"
+>
+  <h1>Welcome to the trade centre!</h1>
+
+  <mat-tab-group>
+    <mat-tab label="Simple search">
+      <p style="text-align: center">Simple search:</p>
+      <br />
+      <form
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxLayoutGap="20px"
+        #f="ngForm"
+        (ngSubmit)="onSubmit(f)"
+      >
+        <mat-form-field appearance="fill">
+          <input
+            type="search"
+            ngModel
+            matInput
+            placeholder="Search for..."
+            name="simpleSearch"
+          />
+          <mat-icon>search</mat-icon>
+        </mat-form-field>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Advanced serach">
+      <p>Advanced serach</p>
+
+      <form
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxLayoutGap="20px"
+        #f="ngForm"
+        (ngSubmit)="onSubmit(f)"
+      >
+        <mat-form-field appearance="fill">
+          <input
+            type="text"
+            ngModel
+            matInput
+            placeholder="Search for..."
+            name="search"
+          />
+          <mat-icon>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Select a category</mat-label>
+          <mat-select [(value)]="selectedCategory" name="category">
+            <mat-optgroup
+              *ngFor="let category of categories"
+              [label]="category.name"
+            >
+              <mat-option
+                *ngFor="let subcategory of category.subcategory"
+                value="{{ subcategory.viewValue }}"
+                >{{ subcategory.viewValue }}</mat-option
+              >
+            </mat-optgroup>
+
+            >
+          </mat-select>
+        </mat-form-field>
+        <p>You selected: {{ selectedCategory }}</p>
+
+        <!-- TODO: ovde postavi jos 2 polja koja
+           ce se prikazati sa *ngIf kada je ovo iznad selektovano -->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Select a trait</mat-label>
+          <mat-select [(value)]="selectedTrait" name="trait">
+            <mat-option value="any">Any trait</mat-option>
+            <mat-option *ngFor="let trait of traits" value="{{ trait }}">{{
+              trait
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Select a quality</mat-label>
+          <mat-select [(value)]="selectedQuality" name="quality">
+            <mat-option value="any">Any quality</mat-option>
+            <mat-option
+              *ngFor="let quality of qualities"
+              value="{{ quality }}"
+              >{{ quality }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
+        <label for="level"></label>
+        <ngx-slider
+          [(value)]="levelSliderLow"
+          [(highValue)]="levelSliderHigh"
+          [options]="levelSliderOption"
+          name="level"
+        ></ngx-slider>
+
+        <p>
+          Slider value is between {{ levelSliderLow | number }} and
+          {{ levelSliderHigh | number }}
+        </p>
+
+        <label for="amount"></label>
+        <ngx-slider
+          [(value)]="amountSliderLow"
+          [(highValue)]="amountSliderHigh"
+          [options]="amountSliderOption"
+          name="amount"
+        ></ngx-slider>
+
+        <p>
+          Slider value is between {{ amountSliderLow | number }} and
+          {{ amountSliderHigh | number }}
+        </p>
+
+        <label for="price"></label>
+        <ngx-slider
+          [(value)]="priceSliderLow"
+          [(highValue)]="priceSliderHigh"
+          [options]="pricetSliderOption"
+          name="price"
+        ></ngx-slider>
+
+        <p>
+          Slider value is between {{ priceSliderLow | number }} and
+          {{ priceSliderHigh | number }}
+        </p>
+        <button
+          type="submit"
+          mat-raised-button
+          color="warn"
+          [disabled]="f.invalid"
+        >
+          Submit
+        </button>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</section>

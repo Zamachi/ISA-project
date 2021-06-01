@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+
+/*
+Definicije teme
+https://material.angular.io/guide/theming#defining-a-theme
+https://material.io/design/color/the-color-system.html#color-theme-creation
+*/
+
+@include mat-core();
+
+$my-theme-primary: mat-palette($mat-gray);
+$my-theme-warn: mat-palette($mat-red);
+$my-theme-accent: mat-palette($mat-green, 900);
+
+$my-theme: mat-dark-theme($my-theme-warn,
+                           $my-theme-primary,
+                           $my-theme-accent);
+
+@include angular-material-theme($my-theme);

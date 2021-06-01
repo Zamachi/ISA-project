@@ -27,4 +27,7 @@ public class NewsController {
     public List<News> findAll() {
         return newsService.findAll();
     }
+
+
+
 }

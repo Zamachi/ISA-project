@@ -1,0 +1,46 @@
+<section>
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px"
+  #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+      <mat-form-field>
+          <input type="email" ngModel matInput placeholder="Email" name="email"
+          required email #emailInput="ngModel">
+          <!--
+            Strukturna direktiva *ngIf:
+            - https://angular.io/api/common/NgIf
+          -->
+          <mat-error *ngIf="emailInput.hasError('required')">Field should not be empty</mat-error>
+          <mat-error *ngIf="!emailInput.hasError('required')">Please use the correct email format</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="Please enter minimum 8 characters">
+          <input type="password" ngModel matInput placeholder="Password" name="password"
+          required minlength="8" #passInput="ngModel">
+          <mat-hint align="end"> {{ passInput.value?.length }} / 8</mat-hint>
+      </mat-form-field>
+
+      <!--
+        Datepicker
+        https://material.angular.io/components/datepicker/overview
+       -->
+      <mat-form-field>
+          <input matInput placeholder="Your date of birth" [matDatepicker]="picker"
+          ngModel name="birthDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!--
+        Checkbox
+        https://material.angular.io/components/checkbox/overview
+       -->
+       <mat-checkbox color="warn" ngModel name="acceptance" required>
+          I accept the terms of conditions of use.
+       </mat-checkbox>
+
+      <button type="submit" mat-raised-button color="warn" [disabled]="f.invalid">Submit</button>
+
+      <mat-label *ngIf="errorExists">{{ errorText }}</mat-label>
+      <a routerLink="/login">Go back</a>
+  </form>
+</section>
