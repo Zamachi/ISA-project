@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CountriesService } from '../services/countries.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -11,10 +13,17 @@ export class RegisterComponent implements OnInit {
 
   errorExists = false;
   errorText = "";
+  selectedCountry: any;
 
-  constructor(private router: Router) { }
+  countries = [  ];
+
+  constructor(private router: Router, private countryService: CountriesService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.countryService.findAllCountries().subscribe(
+      value => { this.countries = value.body.map( country => country.name ) }
+
+    );
   }
 
   onSubmit(form: NgForm){
@@ -28,6 +37,13 @@ export class RegisterComponent implements OnInit {
     //   this.errorExists = true;
     //   this.errorText = "already exists";
     // }
+    this.userService.registerUser(
+      form.value.username,
+      form.value.password,
+      form.value.email,
+      form.value.country
+    );
+
   }
 
 }

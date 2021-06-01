@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { SearchItemComponent } from './search/search-item/search-item.component';
 import { NgxSliderModule } from "@angular-slider/ngx-slider";
+import { CountriesService } from './services/countries.service';
+import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -36,7 +38,7 @@ import { NgxSliderModule } from "@angular-slider/ngx-slider";
     FormsModule,
     NgxSliderModule
   ],
-  providers: [],
+  providers: [ CountriesService, UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
