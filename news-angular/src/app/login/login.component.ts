@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SessionService } from '../services/session.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,33 +14,35 @@ export class LoginComponent implements OnInit {
 
   errorExists = false;
   errorText = "";
+  dataResponse: any;
 
-  constructor(private router:Router) { }
+
+  constructor(private router:Router,
+    private userService: UserService,
+    private _snackBar:MatSnackBar,
+    private sessionService: SessionService,
+    private route: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(form: NgForm) {
-    // var email = form.value.email;
-    // var password = form.value.password;
-    // // var user = this.userService.getUser(email);
 
-    // if(!user) {
-    //   this.errorExists = true;
-    //   this.errorText = "no registered user" + email;
-    //   return;
-    // }
+    this.userService.logOnUser(form.value.username, form.value.password).subscribe(
+      data => {
+        if(data != null){
+          this.dataResponse = data;
+          this.sessionService.loadSession(this.dataResponse);
 
-    // // var isPassValid = this.userService.isPassOk(email, password);
+          this._snackBar.open("Logged in!", "Close", {duration: 3000});
+          this.userService.log_user_in();
+          this.route.navigate(["/home"]);
 
-    // // if(!isPassValid) {
-    //   this.errorExists = true;
-    //   this.errorText = "pass incorrect";
-    //   return;
-    // }
-
-    // this.errorExists = false; //ukoliko je sve u redu ->
-    // this.router.navigate(['']); //-> redirekcija na welcome komponentu
+        }else{
+          this._snackBar.open("User doesn't exist!", "Close", {duration: 3000});
+        }
+      }
+    );
 
   }
 

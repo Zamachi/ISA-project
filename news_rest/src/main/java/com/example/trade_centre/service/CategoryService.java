@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service()
 public class CategoryService implements iCategoryService{
@@ -29,6 +30,7 @@ public class CategoryService implements iCategoryService{
         var parent = category.getParent();
 
         category.setSlug( parent == null ? category.getName():(parent.getName()+"-"+category.getName() ).toLowerCase()  );
+        category.setName( category.getName().toLowerCase() );
 
         return categoryRepository.insert( modelMapper.map(category, Category.class) );
     }
@@ -40,7 +42,7 @@ public class CategoryService implements iCategoryService{
 
     @Override
     public List<Category> findAllByParent(Category parent) {
-        return null;
+        return categoryRepository.findAllByParent(parent);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class CategoryService implements iCategoryService{
 
     @Override
     public Category findBySlug(String slug) {
-        return null;
+        return categoryRepository.findBySlug(slug);
     }
 
     @Override

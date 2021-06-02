@@ -8,5 +8,5 @@ import java.util.List;
 public interface iCategoryRepository extends MongoRepository<Category,String> {
     Category findByName(String name);
     List<Category> findAllByParent(Category parent);
-
+    Category findBySlug(String slug);
 }

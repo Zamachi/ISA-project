@@ -1,7 +1,9 @@
 package com.example.trade_centre.model;
 
+import com.example.trade_centre.entity.Roles;
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class UserModel {
@@ -10,8 +12,9 @@ public class UserModel {
     private String username;
     private String password;
     private String email;
-    private LocalDate date_created;
+    private LocalDate dateCreated;
     private String country;
-    private Long gold_amount;
-    private boolean is_active;
+    private Long goldAmount;
+    private boolean isActive;
+    private List<Roles> userRoles;
 }

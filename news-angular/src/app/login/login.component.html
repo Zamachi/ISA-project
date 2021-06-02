@@ -8,21 +8,17 @@
   >
     <mat-form-field>
       <input
-        type="email"
+        type="text"
         ngModel
         matInput
-        placeholder="Email"
-        name="email"
+        placeholder="Username"
+        name="username"
         required
-        email
-        #emailInput="ngModel"
+        #usernameInput="ngModel"
       />
 
-      <mat-error *ngIf="emailInput.hasError('required')"
+      <mat-error *ngIf="usernameInput.hasError('required')"
         >Field should not be empty</mat-error
-      >
-      <mat-error *ngIf="!emailInput.hasError('required')"
-        >Please use the correct email format</mat-error
       >
     </mat-form-field>
 
@@ -34,7 +30,7 @@
         placeholder="Password"
         name="password"
         required
-        minlength="8"
+
         #userInput="ngModel"
       />
       <mat-hint align="end"> {{ userInput.value?.length }} / 8</mat-hint>

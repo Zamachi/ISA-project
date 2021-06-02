@@ -13,10 +13,10 @@ public class Item {
 
     @Id
     private String Id;
-    @Field("item_name")
-    private String item_name;
-    @Field("base_price")
-    private Long base_price;
+    @Field("itemName")
+    private String itemName;
+    @Field("basePrice")
+    private Long basePrice;
     @Field("category")
     private Category category;
     @Field("amount")
@@ -29,8 +29,8 @@ public class Item {
     private boolean sold;
     @Field("buyer")
     private User buyer;
-    @Field("date_created")
-    private LocalDate date_created;
+    @Field("dateCreated")
+    private LocalDate dateCreated;
     @Field("slug")
     private String slug;
 }

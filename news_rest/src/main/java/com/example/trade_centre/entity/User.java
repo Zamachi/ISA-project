@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Document(collection = "users")
@@ -20,13 +21,15 @@ public class User {
     private String password; 
     @Field("email")
     private String email;
-    @Field("date_created")
-    private LocalDate date_created;
+    @Field("dateCreated")
+    private LocalDate dateCreated;
     @Field("country")
     private String country;
-    @Field("gold_amount")
-    private Long gold_amount;
-    @Field("is_active")
-    private boolean is_active;
+    @Field("goldAmount")
+    private Long goldAmount;
+    @Field("isActive")
+    private boolean isActive;
+    @Field("userRoles")
+    private List<Roles> userRoles;
 
 }

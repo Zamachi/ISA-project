@@ -32,8 +32,9 @@
 
       <div fxFlex fxLayoutAlign="end" fxLayoutGap="15px" fxHide.xs>
         <a routerLink="/items">Items</a>
-        <a routerLink="/register">Signup</a>
-        <a routerLink="/login">Login</a>
+        <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/register">Signup</a>
+        <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/login">Login</a>
+        <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" (click)="logout()" routerLink="/logout">Logout</a>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

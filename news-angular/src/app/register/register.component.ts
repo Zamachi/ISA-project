@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CountriesService } from '../services/countries.service';
 import { UserService } from '../services/user.service';
@@ -16,8 +17,11 @@ export class RegisterComponent implements OnInit {
   selectedCountry: any;
 
   countries = [  ];
-
-  constructor(private router: Router, private countryService: CountriesService, private userService: UserService) { }
+  data: any;
+  constructor(private router: Router,
+    private countryService: CountriesService,
+     private userService: UserService,
+     private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.countryService.findAllCountries().subscribe(
@@ -27,21 +31,21 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    // if(!this.userService.getUser(form.value.email)){
-    //   this.errorExists = false;
-    //   var newUser = this.userService.registerUser( form.value.email,
-    //                                                form.value.password,
-    //                                                form.value.date );
-    //   this.router.navigate(['']); //redirekcija na welcome komponentu
-    // } else {
-    //   this.errorExists = true;
-    //   this.errorText = "already exists";
-    // }
     this.userService.registerUser(
       form.value.username,
       form.value.password,
       form.value.email,
       form.value.country
+    ).subscribe(
+      data => {
+        if(data != null){
+          this.data = data;
+          this._snackBar.open("User "+this.data.username+" created!", "Close", {duration: 3000});
+        }else{
+          this._snackBar.open("User cannot be created, user with a given username exists in the database!", "Close", {duration: 3000});
+
+        }
+       }
     );
 
   }

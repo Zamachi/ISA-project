@@ -12,10 +12,11 @@ import { HomeComponent } from './home/home.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
-import { SearchItemComponent } from './search/search-item/search-item.component';
 import { NgxSliderModule } from "@angular-slider/ngx-slider";
 import { CountriesService } from './services/countries.service';
 import { UserService } from './services/user.service';
+import { ItemsService } from './services/items.service';
+import { SessionService } from './services/session.service';
 
 
 @NgModule({
@@ -24,8 +25,7 @@ import { UserService } from './services/user.service';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    SearchComponent,
-    SearchItemComponent,
+    SearchComponent
 
   ],
   imports: [
@@ -38,7 +38,7 @@ import { UserService } from './services/user.service';
     FormsModule,
     NgxSliderModule
   ],
-  providers: [ CountriesService, UserService ],
+  providers: [ CountriesService, UserService, ItemsService, SessionService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

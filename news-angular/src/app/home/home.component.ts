@@ -1,6 +1,7 @@
 import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router, ParamMap, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -57,11 +58,17 @@ export class HomeComponent implements OnInit {
     ceil: 1000000,
   };
 
-  constructor() {}
+  constructor(private route: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-  onSubmit(form: NgForm) {
-    console.log('radi');
   }
+
+  onSubmitSimple(formSimple: NgForm) {
+      this.route.navigate(["/items/simpleSearch", formSimple.value.simpleSearch]);
+  }
+
+  onSubmit(form:NgForm){
+  }
+
 }

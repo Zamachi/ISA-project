@@ -9,4 +9,7 @@ public interface iItemsService {
 
     Item insert(ItemModel itemModel);
     List<Item> findAll();
+    List<Item> findAllBySlug(String slug);
+    List<Item> findAllByItemName(String ItemName);
+    Item update(ItemModel model);
 }

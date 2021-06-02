@@ -18,6 +18,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatSliderModule} from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 @NgModule ({
     imports: [
@@ -39,7 +42,9 @@ import {MatSliderModule} from '@angular/material/slider';
         MatSortModule,
         MatPaginatorModule,
         MatDialogModule,
-        MatSliderModule
+        MatSliderModule,
+        MatSnackBarModule,
+        MatDividerModule
     ],
     exports: [
         MatButtonModule,
@@ -60,7 +65,9 @@ import {MatSliderModule} from '@angular/material/slider';
         MatSortModule,
         MatPaginatorModule,
         MatDialogModule,
-        MatSliderModule
+        MatSliderModule,
+        MatSnackBarModule,
+        MatDividerModule
     ]
 })
 

@@ -16,13 +16,33 @@ public class ItemController {
     private ItemsService itemsService;
 
     @PostMapping("additem")
+    @CrossOrigin(origins="*")
     private Item addItem(@RequestBody ItemModel itemModel){
         return itemsService.insert(itemModel);
     }
 
     @GetMapping("findallitems")
+    @CrossOrigin(origins="*")
     private List<Item> findAllItems(){
         return itemsService.findAll();
+    }
+
+    @GetMapping("finditemsbyslug")
+    @CrossOrigin(origins = "*")
+    private List<Item> findAllBySlug(String slug){
+        return itemsService.findAllBySlug(slug);
+    }
+
+    @GetMapping("finditemsbyname/{ItemName}")
+    @CrossOrigin(origins = "*")
+    private List<Item> findAllByItemName(@PathVariable("ItemName") String ItemName) {
+        return itemsService.findAllByItemName(ItemName);
+    }
+
+    @PostMapping("updateitem")
+    @CrossOrigin(origins = "*")
+    private Item update(@RequestBody ItemModel itemModel){
+        return itemsService.update(itemModel);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.trade_centre.service;
 
 
+import com.example.trade_centre.entity.Roles;
 import com.example.trade_centre.entity.User;
 import com.example.trade_centre.model.UserModel;
 import com.example.trade_centre.repository.iUserRepository;
@@ -24,21 +25,25 @@ public class UserService implements iUserService, UserDetailsService {
     private AutoMapperService autoMapperService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private RolesService rolesService;
+
 
     @Override
     public User insert(UserModel model) {
 
-        model.setSlug( model.getUsername().toLowerCase()  );
+        model.setSlug( model.getUsername().toLowerCase() );
 
         var sameSlugs = findAllBySlug(model.getSlug());
 
         if (sameSlugs.size() > 0) {
-            model.setSlug(model.getUsername().toLowerCase() + "-" + sameSlugs.size());
+            return null;
         }
 
-        model.setDate_created( LocalDate.now() );
-        model.set_active(true);
-        model.setGold_amount( (long) (1+Math.random()*1000000) );
+        model.setDateCreated( LocalDate.now() );
+        model.setActive(true);
+        model.setGoldAmount( (long) (1+Math.random()*1000000) );
+        model.setUserRoles( rolesService.generateRegisteredUserRoles() );
 
         var test = modelMapper.map(model,User.class);
 

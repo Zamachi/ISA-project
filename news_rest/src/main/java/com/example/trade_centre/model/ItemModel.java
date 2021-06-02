@@ -12,15 +12,15 @@ import java.time.LocalDate;
 public class ItemModel {
 
     private String Id;
-    private String item_name;
-    private Long base_price;
+    private String itemName;
+    private Long basePrice;
     private Category category;
     private int amount;
     private int level;
     private User owner;
     private boolean sold;
     private User buyer;
-    private LocalDate date_created;
+    private LocalDate dateCreated;
     private String slug;
 
 }
