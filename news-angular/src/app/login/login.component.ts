@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
         if(data != null){
           this.dataResponse = data;
           this.sessionService.loadSession(this.dataResponse);
+          this.userService.log_user_in();
 
           this._snackBar.open("Logged in!", "Close", {duration: 3000});
-          this.userService.log_user_in();
           this.route.navigate(["/home"]);
 
         }else{

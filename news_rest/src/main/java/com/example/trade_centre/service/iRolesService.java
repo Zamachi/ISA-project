@@ -8,5 +8,5 @@ import java.util.List;
 public interface iRolesService {
 
     List<Roles> generateRegisteredUserRoles();
-
+    List<Roles> fetchUserRoles(UserModel userModel);
 }

@@ -1,10 +1,9 @@
 package com.example.trade_centre.controller;
 
-import com.example.trade_centre.entity.User;
 import com.example.trade_centre.model.UserModel;
-import com.example.trade_centre.service.LoginService;
+import com.example.trade_centre.service.AuthenticationService;
+import com.example.trade_centre.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     @PostMapping("loginuser")
     @CrossOrigin(origins="*")
     private UserModel loginUser(@RequestBody  UserModel userModel){
-        return  loginService.login(userModel);
+        return  userService.login(userModel);
     }
 
 }

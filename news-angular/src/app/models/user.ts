@@ -1,3 +1,5 @@
+import { Roles } from "./roles";
+
 export interface User{
 id: String;
 slug: String | null;
@@ -8,5 +10,5 @@ dateCreated: Date;
 country: String;
 goldAmount: Number;
 isActive: boolean;
-
+userRoles: Array<Roles>;
 }

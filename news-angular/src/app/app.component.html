@@ -25,7 +25,7 @@
       </div>
 
       <div>
-        <a routerLink="/">Logo</a>
+        <a routerLink="/"><img src="../assets/Logo.png" height="63.99" alt="Slika ne radi"></a>
       </div>
 
       <!-- direktivaNardeba.dimenzijaDispleja - konkretan primer je ovde fxHide.xs -->
@@ -34,6 +34,11 @@
         <a routerLink="/items">Items</a>
         <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/register">Signup</a>
         <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/login">Login</a>
+        &nbsp;
+        <span> | </span>
+        &nbsp;
+        <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/admin-panel">Admin panel</a>
+        <a *ngIf="!(isLoggedIn$ | async) as isLoggedIn" routerLink="/profile">Profile</a>
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" (click)="logout()" routerLink="/logout">Logout</a>
       </div>
     </mat-toolbar>

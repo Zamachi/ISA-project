@@ -1,4 +1,6 @@
 import { Category } from "./category";
+import { Quality } from "./quality";
+import { Trait } from "./trait";
 import { User } from "./user";
 
 export interface Item{
@@ -13,4 +15,6 @@ export interface Item{
   dateCreated: Date;
   buyer: User | null;
   slug: String | null;
+  trait: Trait;
+  quality: Quality;
 }

@@ -17,6 +17,8 @@ import { CountriesService } from './services/countries.service';
 import { UserService } from './services/user.service';
 import { ItemsService } from './services/items.service';
 import { SessionService } from './services/session.service';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { SessionService } from './services/session.service';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    AdminPanelComponent,
+    ProfileComponent
 
   ],
   imports: [

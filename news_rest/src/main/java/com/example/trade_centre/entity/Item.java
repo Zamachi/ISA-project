@@ -33,4 +33,8 @@ public class Item {
     private LocalDate dateCreated;
     @Field("slug")
     private String slug;
+    @Field("trait")
+    private Trait trait;
+    @Field("quality")
+    private Quality quality;
 }

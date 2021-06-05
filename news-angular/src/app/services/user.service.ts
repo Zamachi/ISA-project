@@ -38,6 +38,10 @@ export class UserService {
   }
 
   getIsLoggedOn() : BehaviorSubject<boolean>{
+
+    if(localStorage.length > 0)
+      this.log_user_in();
+
     return this.isLoggedIn;
   }
 

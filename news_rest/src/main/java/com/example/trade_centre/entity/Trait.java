@@ -6,10 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
-@Document(collection = "roles")
-public class Roles {
+@Document(collection = "traits")
+public class Trait {
     @Id
     private String id;
-    @Field("roleName")
-    private String roleName;
+    @Field("traitName")
+    private String traitName;
+
 }

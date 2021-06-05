@@ -1,6 +1,8 @@
 package com.example.trade_centre.model;
 
 import com.example.trade_centre.entity.Category;
+import com.example.trade_centre.entity.Quality;
+import com.example.trade_centre.entity.Trait;
 import com.example.trade_centre.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -22,5 +24,6 @@ public class ItemModel {
     private User buyer;
     private LocalDate dateCreated;
     private String slug;
-
+    private Trait trait;
+    private Quality quality;
 }

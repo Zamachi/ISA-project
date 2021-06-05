@@ -23,7 +23,7 @@ export class ItemsService {
 
     var headers_object = new HttpHeaders();
     headers_object.append('Content-Type', 'application/json');
-    headers_object.append("Authentication", "Basic " + btoa("petar:admin"));
+    headers_object.append("Authorization", "Basic " + btoa("petar:admin"));
 
     let data = new HttpParams().set("ItemName", ItemName);
     return this.client.get<Item[]>("http://localhost:8080/items/finditemsbyname", {observe: "response", params: data, headers: headers_object });
