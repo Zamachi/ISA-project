@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
@@ -19,6 +19,8 @@ import { ItemsService } from './services/items.service';
 import { SessionService } from './services/session.service';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CategoryService } from './services/category.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
 @NgModule({
@@ -42,7 +44,13 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     NgxSliderModule
   ],
-  providers: [ CountriesService, UserService, ItemsService, SessionService ],
+  providers: [
+    CountriesService,
+    UserService,
+    ItemsService,
+    SessionService,
+    CategoryService,
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

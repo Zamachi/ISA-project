@@ -1,11 +1,9 @@
 package com.example.trade_centre.service;
 
 import com.example.trade_centre.entity.Author;
-import com.example.trade_centre.entity.NewsLocalizations;
 import com.example.trade_centre.entity.Tags;
 import com.example.trade_centre.entity.User;
 import com.example.trade_centre.model.AuthorModel;
-import com.example.trade_centre.model.NewsLocalizationsModel;
 import com.example.trade_centre.model.TagsModel;
 import com.example.trade_centre.model.UserModel;
 import org.modelmapper.Converter;
@@ -34,10 +32,8 @@ public class AutoMapperService implements IAutoMapperService {
 //               skip(source.getFirstName());
 //            }
 //        });
-        modelMapper.createTypeMap(NewsLocalizationsModel.class, NewsLocalizations.class);
         modelMapper.createTypeMap(Tags.class, TagsModel.class);
         modelMapper.createTypeMap(Author.class, AuthorModel.class);
-        modelMapper.createTypeMap(NewsLocalizations.class, NewsLocalizationsModel.class);
 
         modelMapper.createTypeMap(UserModel.class, User.class);
         modelMapper.createTypeMap(User.class, UserModel.class);

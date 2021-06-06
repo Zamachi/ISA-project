@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatSliderModule} from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule ({
@@ -44,7 +45,8 @@ import { MatDividerModule } from '@angular/material/divider';
         MatDialogModule,
         MatSliderModule,
         MatSnackBarModule,
-        MatDividerModule
+        MatDividerModule,
+        MatRadioModule
     ],
     exports: [
         MatButtonModule,
@@ -67,7 +69,8 @@ import { MatDividerModule } from '@angular/material/divider';
         MatDialogModule,
         MatSliderModule,
         MatSnackBarModule,
-        MatDividerModule
+        MatDividerModule,
+        MatRadioModule
     ]
 })
 

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service()
-public class UserService implements iUserService, UserDetailsService {
+public class UserService implements iUserService, UserDetailsService{
 
     @Autowired
     private iUserRepository userRepository;
@@ -84,25 +84,25 @@ public class UserService implements iUserService, UserDetailsService {
         return userRepository.findAllBySlug( slug );
     }
 
+//    @Override
+//    public UserModel login(UserModel userModel) {
+//        var userEntity = modelMapper.map(userModel, com.example.trade_centre.entity.User.class);
+//
+//        try {
+//            //DANGER: userFromBase je UserDetails, samim tim vraca null nad podacima koji nisu authorities, username ili password, treba prilagoditi interfejs
+//            var userFromBase = loadUserByUsername(userEntity.getUsername());
+//            if( userFromBase != null && passwordEncoder.matches( userEntity.getPassword() , userFromBase.getPassword() ) && userFromBase.isEnabled() ){
+//                return modelMapper.map( userFromBase, UserModel.class );
+//            }
+//        } catch (UsernameNotFoundException e) {
+//            return null;
+//        }
+//
+//        return null;
+//    }
+
     @Override
-    public UserModel login(UserModel userModel) {
-        var userEntity = modelMapper.map(userModel, com.example.trade_centre.entity.User.class);
-
-        try {
-            //DANGER: userFromBase je UserDetails, samim tim vraca null nad podacima koji nisu authorities, username ili password, treba prilagoditi interfejs
-            var userFromBase = loadUserByUsername(userEntity.getUsername());
-            if( userFromBase != null && passwordEncoder.matches( userEntity.getPassword() , userFromBase.getPassword() ) && userFromBase.isEnabled() ){
-                return modelMapper.map( userFromBase, UserModel.class );
-            }
-        } catch (UsernameNotFoundException e) {
-            return null;
-        }
-
-        return null;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public User loadUserByUsername(String s) throws UsernameNotFoundException {
 
         var user_from_database = findByUsername(s);
 
@@ -110,16 +110,7 @@ public class UserService implements iUserService, UserDetailsService {
            throw new UsernameNotFoundException("User not found");
        }
 
-
-       List<GrantedAuthority> authorities = new ArrayList<>();
-
-       user_from_database.getUserRoles().forEach( roles -> authorities.add(new SimpleGrantedAuthority(roles.getRoleName())) );
-
-        return new org.springframework.security.core.userdetails.User(
-                user_from_database.getUsername(),
-                user_from_database.getPassword(),
-                authorities
-        );
+       return user_from_database;
 
     }
 }

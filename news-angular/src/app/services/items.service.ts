@@ -11,7 +11,9 @@ export class ItemsService {
   constructor(private client: HttpClient) { }
 
   public findAll(): Observable<HttpResponse<Item[]>>{
-    return this.client.get<Item[]>("http://localhost:8080/items/findallitems", {observe: "response"});
+    var headers_object = new HttpHeaders().set("Content-Type",'application/json');//.set("Authorization",localStorage.getItem("token") ? "Bearer "+localStorage.getItem("token"):"");
+
+    return this.client.get<Item[]>("http://localhost:8080/items/findallitems", {observe: "response", headers: headers_object});
   }
 
   public findAllBySlug(slug: string) : Observable<HttpResponse<Item[]>>{

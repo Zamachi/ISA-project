@@ -4,15 +4,13 @@ import com.example.trade_centre.entity.Category;
 import com.example.trade_centre.model.CategoryModel;
 import com.example.trade_centre.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("category")
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     @Autowired
@@ -34,12 +32,13 @@ public class CategoryController {
     }
 
     @GetMapping("findallcategories")
+    @CrossOrigin(origins="*")
     private List<Category> findAllCategories(){
         return categoryService.findAll();
     }
 
     @GetMapping("findcategorybyname")
-    private Category findCategoryByName(String name){
+    private Category findCategoryByName( String name){
         return categoryService.findByName(name);
     }
 

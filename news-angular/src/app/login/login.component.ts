@@ -8,42 +8,44 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   errorExists = false;
-  errorText = "";
+  errorText = '';
   dataResponse: any;
 
-
-  constructor(private router:Router,
+  constructor(
+    private router: Router,
     private userService: UserService,
-    private _snackBar:MatSnackBar,
+    private _snackBar: MatSnackBar,
     private sessionService: SessionService,
-    private route: Router) { }
+    private route: Router
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
+    this.userService
+      .logOnUser(form.value.username, form.value.password)
+      .subscribe((data) => {
+        console.log(data);
+        if (data.body != null) {
+          // console.log(data.headers.get("authorization"));
 
-    this.userService.logOnUser(form.value.username, form.value.password).subscribe(
-      data => {
-        if(data != null){
           this.dataResponse = data;
           this.sessionService.loadSession(this.dataResponse);
           this.userService.log_user_in();
 
-          this._snackBar.open("Logged in!", "Close", {duration: 3000});
-          this.route.navigate(["/home"]);
-
-        }else{
-          this._snackBar.open("User doesn't exist!", "Close", {duration: 3000});
+          this.route.navigate(['/home']);
         }
-      }
-    );
-
+      })
+      .add(() => {
+        this.dataResponse == null
+          ? this._snackBar.open("User doesn't exist!", 'Close', {
+              duration: 3000,
+            })
+          : this._snackBar.open('Logged in!', 'Close', { duration: 3000 });
+      });
   }
-
 }

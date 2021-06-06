@@ -14,5 +14,5 @@ public interface iUserService {
     User findByUsername(String username);
     List<User> findAll();
     List<User> findAllBySlug(String slug);
-    UserModel login(UserModel userModel);
+//    UserModel login(UserModel userModel);
 }

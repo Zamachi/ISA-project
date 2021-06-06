@@ -9,9 +9,12 @@ export class SessionService {
 
   constructor() { }
 
-  loadSession( user: User ){
-    localStorage.setItem("username", user.username.toString());
-    localStorage.setItem("goldAmount", user.goldAmount?.toString());
+  loadSession( response: any ){
+    // console.log(response);
+
+    localStorage.setItem("username", response.body.username.toString());
+    localStorage.setItem("goldAmount", response.body.goldAmount?.toString());
+    localStorage.setItem("token",response?.headers?.get("authorization"));
   }
 
   clearSession( ){

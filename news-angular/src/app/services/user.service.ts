@@ -34,7 +34,7 @@ export class UserService {
       "password":password
     };
 
-    return this.client.post<any>(url, user);
+    return this.client.post<any>(url, user, {observe: 'response'});
   }
 
   getIsLoggedOn() : BehaviorSubject<boolean>{
