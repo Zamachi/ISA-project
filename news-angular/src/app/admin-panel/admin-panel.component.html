@@ -48,10 +48,10 @@
 
           <mat-form-field *ngIf="radio.value == 'create'">
             <mat-label>Select parent category</mat-label>
-            <mat-select [(ngModel)]="parentCategory" name="parentCategory" required>
-              <mat-option value="none">--</mat-option>
+            <mat-select [(ngModel)]="parentCategory" name="parentCategory" >
+              <mat-option [value]="null">--</mat-option>
               <mat-option *ngFor="let category of categories" [value]="category">
-                {{category}}
+                {{category.name}}
               </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
@@ -60,20 +60,21 @@
 
           <mat-form-field *ngIf="radio.value == 'update'">
             <mat-label>Select a category to update</mat-label>
-            <mat-select [(ngModel)]="updateCategory" name="updateCategory" required>
-              <mat-option *ngFor="let category of categories" [value]="category">
-                {{category}}
+            <mat-select [(ngModel)]="updateCategory" ngModel #updateCategoryInput="ngModel" name="updateCategory" required>
+              <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{category.name}}
               </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
             <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
           </mat-form-field>
 
-          <mat-form-field *ngIf="radio.value == 'update'">
+          <mat-form-field *ngIf="radio.value == 'update' && updateCategory">
             <mat-label>Select that category's parent</mat-label>
-            <mat-select [(ngModel)]="updateCategory" name="updateCategoryParent" required>
+            <mat-select [(ngModel)]="updateCategoryParent" name="updateCategoryParent" required>
+              <mat-option [value]="null">--</mat-option>
               <mat-option *ngFor="let category of categories" [value]="category">
-                {{category}}
+                {{category.name}}
               </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
@@ -96,8 +97,8 @@
           <mat-form-field *ngIf="radio.value == 'delete'">
             <mat-label>Select category to delete</mat-label>
             <mat-select [(ngModel)]="deleteCategory"  name="deleteCategory" required>
-              <mat-option *ngFor="let category of categories" [value]="category">
-                {{category}}
+              <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{category.name}}
               </mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="deleteCategoryInput.hasError('required')">Please choose a category to delete</mat-error> -->
@@ -117,10 +118,189 @@
 
     <mat-tab label="Quality CRUD">
       <p style="text-align: center">Edit qualities:</p> <br>
+
+      <section>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="20px"
+          #formaUpdate="ngForm"
+          (ngSubmit)="onSubmitQuality(formaUpdate)"
+        >
+
+        <mat-radio-group [(ngModel)] = "radioCUD" #radio="ngModel" name="radio" aria-label="What do you want to do?">
+          <mat-radio-button value="create">Create a quality</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="update">Update a quality</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="delete">Delete a quality</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- <p  *ngIf="radio.value == 'create'">kreiranje</p>
+        <p *ngIf="radio.value == 'update'">apdejtovanje</p>
+        <p *ngIf="radio.value == 'delete'">brisanje</p> -->
+
+          <mat-form-field *ngIf="radio.value == 'create'">
+            <input
+              type="text"
+              [(ngModel)] = "newQualityName"
+              matInput
+              placeholder="New category's name..."
+              name="newQualityName"
+              #newQualityNameInput="ngModel"
+            />
+
+            <mat-error *ngIf="newQualityNameInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'create'">
+            <mat-label>Select new quality's color</mat-label>
+            <mat-select [(ngModel)]="newQualityColor" name="newQualityColor" >
+              <mat-option *ngFor="let color of cssColors" [value]="color">
+                {{color}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Select a quality to update</mat-label>
+            <mat-select [(ngModel)]="updateQuality" ngModel #updateQualityInput="ngModel" name="updateQuality" required>
+              <mat-option *ngFor="let quality of qualities" [value]="quality.id">
+                {{quality.qualityName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Update that quality's name</mat-label>
+            <input
+            type="text"
+            [(ngModel)] = "updateQualityName"
+            matInput
+            placeholder="Update quality's name..."
+            name="updateQualityName"
+            #updateQualityNameInput="ngModel"
+            required
+          />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Update quality's color</mat-label>
+            <mat-select [(ngModel)]="updateQualityColor" name="updateQualityColor" >
+              <mat-option *ngFor="let color of cssColors" [value]="color">
+                {{color}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'delete'">
+            <mat-label>Select quality to delete</mat-label>
+            <mat-select [(ngModel)]="deleteQualityId"  name="deleteQualityId" required>
+              <mat-option *ngFor="let quality of qualities" [value]="quality.id">
+                {{quality.qualityName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="deleteCategoryInput.hasError('required')">Please choose a category to delete</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button color="warn">
+            Submit
+          </button>
+
+          <!-- <mat-label *ngIf="errorExists">{{ errorText }}</mat-label> -->
+        </form>
+      </section>
+
     </mat-tab>
 
     <mat-tab label="Trait CRUD">
       <p style="text-align: center">Edit traits:</p> <br>
+
+      <section>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="20px"
+          #formaTrait="ngForm"
+          (ngSubmit)="onSubmitTrait(formaTrait)"
+        >
+
+        <mat-radio-group [(ngModel)] = "radioCUD" #radio="ngModel" name="radio" aria-label="What do you want to do?">
+          <mat-radio-button value="create">Create a trait</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="update">Update a trait</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="delete">Delete a trait</mat-radio-button>
+        </mat-radio-group>
+
+          <mat-form-field *ngIf="radio.value == 'create'">
+            <input
+              type="text"
+              [(ngModel)] = "newTraitName"
+              matInput
+              placeholder="New trait's name..."
+              name="newTraitName"
+              #newTraitNameInput="ngModel"
+            />
+
+            <mat-error *ngIf="newTraitNameInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Select a trait to update</mat-label>
+            <mat-select [(ngModel)]="updateTrait" ngModel #updateTraitInput="ngModel" name="updateTrait" required>
+              <mat-option *ngFor="let trait of traits" [value]="trait.id">
+                {{trait.traitName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Update that trait's name</mat-label>
+            <input
+            type="text"
+            [(ngModel)] = "updateTraitName"
+            matInput
+            placeholder="Update trait's name..."
+            name="updateTraitName"
+            #updateTraitNameInput="ngModel"
+            required
+          />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'delete'">
+            <mat-label>Select trait to delete</mat-label>
+            <mat-select [(ngModel)]="deleteTraitId"  name="deleteTraitId" required>
+              <mat-option *ngFor="let trait of traits" [value]="trait.id">
+                {{trait.traitName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="deleteCategoryInput.hasError('required')">Please choose a category to delete</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button color="warn">
+            Submit
+          </button>
+
+          <!-- <mat-label *ngIf="errorExists">{{ errorText }}</mat-label> -->
+        </form>
+      </section>
+
+
     </mat-tab>
 
     <mat-tab label="Edit user roles">

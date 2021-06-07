@@ -6,10 +6,12 @@ import com.example.trade_centre.repository.iCategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import java.util.List;
-import java.util.Locale;
+
+import static org.apache.logging.log4j.util.Strings.isEmpty;
+import static org.apache.logging.log4j.util.Strings.isNotEmpty;
+
 
 @Service()
 public class CategoryService implements iCategoryService{
@@ -26,11 +28,13 @@ public class CategoryService implements iCategoryService{
 
     @Override
     public Category insert(CategoryModel category) {
-
-        var parent = category.getParent();
+        Category parent=null;
+        if( category.getParent() != null ) {
+            parent = findCategoryById(category.getParent().getId());
+            category.setParent(parent);
+        }
 
         category.setSlug( parent == null ? category.getName():(parent.getName()+"-"+category.getName() ).toLowerCase()  );
-        category.setName( category.getName().toLowerCase() );
 
         return categoryRepository.insert( modelMapper.map(category, Category.class) );
     }
@@ -68,10 +72,35 @@ public class CategoryService implements iCategoryService{
     @Override
     public Category update(CategoryModel categoryModel) {
 
-        var old_category = categoryRepository.findByName(categoryModel.getName() );
+        //NOTE: basically must exist
+        var old_category = categoryRepository.findById(categoryModel.getId()).get();
 
+        old_category.setName( categoryModel.getName() );
 
+        Category parent=null;
+        if( categoryModel.getParent() != null ) {
+            parent = findCategoryById(categoryModel.getParent().getId());
+            old_category.setParent(parent);
+        }
+
+        old_category.setSlug( parent == null ? old_category.getName():(parent.getName()+"-"+old_category.getName() ).toLowerCase()  );
 
         return categoryRepository.save( modelMapper.map(old_category,Category.class) );
+    }
+
+    @Override
+    public void deleteById(String id) {
+        categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Category findCategoryById(String Id) {
+
+        var result = categoryRepository.findById(Id);
+
+        if(result.isEmpty())
+            return null;
+
+        return result.get();
     }
 }

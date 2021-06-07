@@ -16,4 +16,6 @@ public interface iCategoryService {
     Category findBySlug(String slug);
     List<Category> findAllByParent(CategoryModel parent);
     Category update(CategoryModel categoryModel);
+    void deleteById(String id);
+    Category findCategoryById(String Id);
 }

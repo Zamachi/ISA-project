@@ -16,12 +16,14 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("createcategory")
+    @PostMapping("createcategory")
+    @CrossOrigin(origins="*")
     private Category createCategory(@RequestBody CategoryModel categoryModel){
         return categoryService.insert(categoryModel);
     }
 
-    @GetMapping("updatecategory")
+    @PutMapping("updatecategory")
+    @CrossOrigin(origins="*")
     private Category updateCategory(@RequestBody CategoryModel categoryModel){
         return categoryService.update(categoryModel);
     }
@@ -38,8 +40,15 @@ public class CategoryController {
     }
 
     @GetMapping("findcategorybyname")
+    @CrossOrigin(origins="*")
     private Category findCategoryByName( String name){
         return categoryService.findByName(name);
+    }
+
+    @DeleteMapping("deletecategorybyid/{id}")
+    @CrossOrigin(origins="*")
+    private void deleteCategoryById(@PathVariable("id")  String id){
+        categoryService.deleteById(id);
     }
 
 }

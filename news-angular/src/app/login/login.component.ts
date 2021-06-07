@@ -47,5 +47,6 @@ export class LoginComponent implements OnInit {
             })
           : this._snackBar.open('Logged in!', 'Close', { duration: 3000 });
       });
+      //NOTE: add se izvrsava nakon sto se unsubscribe-uje sa Observable-a
   }
 }

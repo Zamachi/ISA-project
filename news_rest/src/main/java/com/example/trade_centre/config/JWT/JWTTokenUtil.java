@@ -27,7 +27,7 @@ public class JWTTokenUtil {
                 .setSubject(format("%s,%s", user.getId(), user.getUsername()))
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + /*7 * 24 * 60 * */ 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 *  60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

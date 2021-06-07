@@ -1,7 +1,7 @@
 export interface Category{
-  id: String;
+  id?: String;
   name: String;
-  slug: String | null;
-  parent: Category | null;
+  slug?: String | null;
+  parent?: Category | null;
 
 }
