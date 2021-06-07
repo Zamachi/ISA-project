@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 public class ItemModel {
 
-    private String Id;
+    private String id;
     private String itemName;
     private Long basePrice;
     private Category category;

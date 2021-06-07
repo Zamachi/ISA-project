@@ -305,6 +305,83 @@
 
     <mat-tab label="Edit user roles">
       <p style="text-align: center">Edit user roles:</p> <br>
+
+      <section>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="20px"
+          #formaRoles="ngForm"
+          (ngSubmit)="onSubmitRoles(formaRoles)"
+        >
+
+        <mat-radio-group [(ngModel)] = "radioCUD" #radio="ngModel" name="radio" aria-label="What do you want to do?">
+          <mat-radio-button value="create">Create a role</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="update">Update a role</mat-radio-button>
+          &nbsp;
+          <mat-radio-button value="delete">Delete a role</mat-radio-button>
+        </mat-radio-group>
+
+          <mat-form-field *ngIf="radio.value == 'create'">
+            <input
+              type="text"
+              [(ngModel)] = "newRoleName"
+              matInput
+              placeholder="New role's name..."
+              name="newRoleName"
+              #newRoleNameInput="ngModel"
+              required
+            />
+
+            <mat-error *ngIf="newRoleNameInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Select a role to update</mat-label>
+            <mat-select [(ngModel)]="updateRole" ngModel #updateRoleInput="ngModel" name="updateRole" required>
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+                {{role.roleName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'update'">
+            <mat-label>Update that role's name</mat-label>
+            <input
+            type="text"
+            [(ngModel)] = "updateRoleName"
+            matInput
+            placeholder="Update role's name..."
+            name="updateRoleName"
+            #updateTraitNameInput="ngModel"
+            required
+          />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="radio.value == 'delete'">
+            <mat-label>Select role to delete</mat-label>
+            <mat-select [(ngModel)]="deleteRoleId"  name="deleteRoleId" required>
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+                {{role.roleName}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="deleteCategoryInput.hasError('required')">Please choose a category to delete</mat-error> -->
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button color="warn">
+            Submit
+          </button>
+
+          <!-- <mat-label *ngIf="errorExists">{{ errorText }}</mat-label> -->
+        </form>
+      </section>
+
     </mat-tab>
 
     <!-- NOTE: vidi da l' da dodas jos nesto -->

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Item {
 
     @Id
-    private String Id;
+    private String id;
     @Field("itemName")
     private String itemName;
     @Field("basePrice")

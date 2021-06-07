@@ -11,4 +11,9 @@ public interface iItemsRepository extends MongoRepository<Item,String> {
     List<Item> findAllBySlug(String slug);
     @Query(value = "{ itemName : {$regex : ?0, $options: 'i'} }")
     List<Item> findAllByItemName(String ItemName);
+    @Query(value = "{ sold: false }")
+    List<Item> findAllByIsActive();
+    @Query(value = "{ 'buyer.username': ?0 }")
+    List<Item> findAllByBuyer(String username);
+
 }

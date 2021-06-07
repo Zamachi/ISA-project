@@ -10,6 +10,7 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit{
 
   isLoggedIn$: any;
+  goldAmount$: any;
 
   constructor(
     private userService: UserService,
@@ -19,6 +20,11 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // this.isLoggedIn = "true" == localStorage.getItem("isLoggedIn")?.toLowerCase();
     this.isLoggedIn$ = this.userService.getIsLoggedOn();
+
+    if(this.userService.getIsLoggedOn()){
+      this.goldAmount$ = localStorage.getItem("goldAmount");
+    }
+
   }
 
   logout(){

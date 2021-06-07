@@ -8,10 +8,6 @@
   https://material.angular.io/components/table/overview
  -->
  <mat-table [dataSource]="items" matSort>
-  <!-- <ng-container matColumnDef="icon">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Icon</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.date | date }}</mat-cell>
-  </ng-container> NOTE:Ovde ce ici ikonica -->
   <ng-container matColumnDef="itemName">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Item name</mat-header-cell>
     <mat-cell *matCellDef="let element">{{ element.itemName }}</mat-cell>
@@ -24,7 +20,6 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Item owner</mat-header-cell>
     <mat-cell *matCellDef="let element">{{ element.owner.username }}</mat-cell>
   </ng-container>
-
   <ng-container matColumnDef="dateCreated">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Date of creation</mat-header-cell>
     <mat-cell *matCellDef="let element">{{ element.dateCreated | date}}</mat-cell>
@@ -41,8 +36,12 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>In total</mat-header-cell>
     <mat-cell *matCellDef="let element">{{ element.basePrice * element.amount| number}}</mat-cell>
   </ng-container>
-
-
+  <ng-container matColumnDef="buy?">
+    <mat-header-cell *matHeaderCellDef >Buy item</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-raised-button color="warn" *ngIf="element.owner.username != loggedInUser" (click)="buyComponent(loggedInUser, element.id, element.basePrice, element.amount )">Buy</button>
+    </mat-cell>
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let rows; columns: displayedColumns;"></mat-row>

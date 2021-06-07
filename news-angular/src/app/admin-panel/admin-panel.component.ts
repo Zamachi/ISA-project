@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Category } from '../models/category';
 import { Quality } from '../models/quality';
+import { Roles } from '../models/roles';
 import { Trait } from '../models/trait';
 import { CategoryService } from '../services/category.service';
 import { QualityService } from '../services/quality.service';
+import { RolesService } from '../services/roles.service';
 import { TraitService } from '../services/trait.service';
 
 @Component({
@@ -203,10 +205,24 @@ export class AdminPanelComponent implements OnInit {
   deleteTraitId: String;
 
   //NOTE: traits
+
+  //NOTE: roles
+
+  roles: Array<Roles>;
+
+  newRoleName: String;
+
+  updateRole: Roles;
+  updateRoleName: String;
+
+  deleteRoleId: String;
+
+  //NOTE: roles
   constructor(
     private categoryService: CategoryService,
     private qualityService: QualityService,
-    private traitService: TraitService
+    private traitService: TraitService,
+    private rolesService: RolesService
     ) { }
 
   ngOnInit(): void {
@@ -225,6 +241,12 @@ export class AdminPanelComponent implements OnInit {
         this.traits = data.body
       }
     );
+
+      this.rolesService.findAllRoles().subscribe(
+        data => {
+          this.roles = data.body;
+        }
+      );
 
   }
 
@@ -306,6 +328,34 @@ export class AdminPanelComponent implements OnInit {
 
     }else{
       this.traitService.deleteTrait(form.value.deleteTraitId).subscribe();
+    }
+  }
+
+  // ROLE SHABLON
+//   export class Roles{
+//     id: String;
+//     roleName: String;
+//  }
+
+  onSubmitRoles(form: NgForm){
+    if(this.radioCUD === "create")
+    {
+      const role = {
+        "roleName" : form.value.newRoleName
+      };
+
+      this.rolesService.createRole(role).subscribe();
+    }
+    else if(this.radioCUD === "update"){
+      const role = {
+        "id":form.value.updateRole,
+        "roleName":form.value.updateRoleName
+      };
+
+      this.rolesService.updateRole(role).subscribe();
+
+    }else{
+      this.rolesService.deleteRole(form.value.deleteRoleId).subscribe();
     }
   }
 

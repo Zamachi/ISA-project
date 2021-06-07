@@ -84,6 +84,11 @@ public class UserService implements iUserService, UserDetailsService{
         return userRepository.findAllBySlug( slug );
     }
 
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
 //    @Override
 //    public UserModel login(UserModel userModel) {
 //        var userEntity = modelMapper.map(userModel, com.example.trade_centre.entity.User.class);

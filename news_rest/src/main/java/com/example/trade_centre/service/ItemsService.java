@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service()
 public class ItemsService implements iItemsService{
@@ -18,7 +19,7 @@ public class ItemsService implements iItemsService{
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private iUserService userService;
+    private UserService userService;
 
     @Override
     public Item insert(ItemModel itemModel) {
@@ -51,9 +52,44 @@ public class ItemsService implements iItemsService{
     @Override
     public Item update(ItemModel model) {
 
-        var old_model = itemsRepository.findById( model.getId() ).get();
+        var old_model = itemsRepository.findById( model.getId() );
 
 
         return itemsRepository.save( modelMapper.map(old_model, Item.class) );
+    }
+
+    @Override
+    public Item buyItem(String username, String id) {
+
+        var old_item = itemsRepository.findById( id );
+        Item new_item = null;
+        if(old_item.isPresent())
+            new_item = old_item.get();
+
+
+        var buyer = userService.findByUsername(username);
+        new_item.setSold( true );
+        new_item.setBuyer( buyer );
+
+        buyer.setGoldAmount(buyer.getGoldAmount() - new_item.getBasePrice() * new_item.getAmount() );
+
+        userService.save(buyer);
+
+        return itemsRepository.save( new_item );
+    }
+
+    @Override
+    public List<Item> findAllItems() {
+        return itemsRepository.findAllByIsActive();
+    }
+
+    @Override
+    public List<ItemModel> findAllByBuyer(String username) {
+
+        var moji_itemi = itemsRepository.findAllByBuyer(username);
+
+        List<ItemModel> to_return = moji_itemi.stream().map(item -> modelMapper.map(item, ItemModel.class)).collect(Collectors.toList());
+
+        return to_return;
     }
 }

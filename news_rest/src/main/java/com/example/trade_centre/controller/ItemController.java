@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("items")
@@ -24,6 +25,12 @@ public class ItemController {
     @GetMapping("findallitems")
     @CrossOrigin(origins="*")
     private List<Item> findAllItems(){
+        return itemsService.findAllItems();
+    }
+
+    @GetMapping("findall")
+    @CrossOrigin(origins="*")
+    private List<Item> findAll(){
         return itemsService.findAll();
     }
 
@@ -43,6 +50,20 @@ public class ItemController {
     @CrossOrigin(origins = "*")
     private Item update(@RequestBody ItemModel itemModel){
         return itemsService.update(itemModel);
+    }
+
+    @PostMapping("buyitem")
+    @CrossOrigin(origins = "*")
+    private Item buyItem(@RequestBody Map< String, String> json){
+        var username = json.get("username");
+        var item_id = json.get("item_id");
+        return itemsService.buyItem(username,item_id);
+    }
+
+    @GetMapping("fetchuserpurchases/{username}")
+    @CrossOrigin(origins = "*")
+    private List<ItemModel> findAllByBuyer(@PathVariable("username") String username){
+        return itemsService.findAllByBuyer(username);
     }
 
 }

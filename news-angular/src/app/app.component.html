@@ -46,6 +46,13 @@
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" routerLink="/admin-panel">Admin panel</a>
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" routerLink="/profile">Profile</a>
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" (click)="logout()" routerLink="/logout">Logout</a>
+
+        <span *ngIf="(isLoggedIn$ | async) as isLoggedIn">
+          &nbsp;
+          <span> | </span>
+          &nbsp;
+          {{ goldAmount$  | number }}&nbsp; gold
+        </span>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

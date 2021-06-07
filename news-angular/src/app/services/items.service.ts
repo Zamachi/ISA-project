@@ -32,4 +32,32 @@ export class ItemsService {
 
   }
 
+  public buyItem(username: String, item_id: String){
+
+    const url = "http://localhost:8080/items/buyitem";
+
+    const body = {
+      "username": username,
+      "item_id": item_id
+    };
+
+    return this.client.post<any>(url, body, { observe: 'response' });
+  }
+
+  public createItem(item: any){
+    const url = "http://localhost:8080/items/additem";
+
+
+    return this.client.post<any>(url, item, { observe: 'response' });
+  }
+
+  public findMyItems(username: string){
+
+    const url = "http://localhost:8080/items/fetchuserpurchases/" + username;
+
+
+    return this.client.get<any>(url, { observe: 'response' });
+
+  }
+
 }

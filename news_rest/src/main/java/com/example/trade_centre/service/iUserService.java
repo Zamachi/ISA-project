@@ -14,5 +14,6 @@ public interface iUserService {
     User findByUsername(String username);
     List<User> findAll();
     List<User> findAllBySlug(String slug);
+    User save(User user);
 //    UserModel login(UserModel userModel);
 }

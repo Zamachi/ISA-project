@@ -1,45 +1,182 @@
+<section>
+  <mat-tab-group fxFlex>
+    <mat-tab label="Insert item CRUD">
+      <p style="text-align: center">Add item to be sold:</p>
+      <br />
 
+      <section>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          fxLayoutGap="20px"
+          #f="ngForm"
+          (ngSubmit)="onSubmit(f)"
+        >
+          <mat-form-field>
+            <input
+              type="text"
+              [(ngModel)]="item_name"
+              matInput
+              placeholder="Input item name . . ."
+              name="item_name"
+              #item_nameInput="ngModel"
+              required
+            />
 
-<section >
-  <h1>Welcome, {{user.username}} !</h1>
-  <form
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="20px"
-    #f="ngForm"
-    (ngSubmit)="onSubmit(f)"
-  >
-    <mat-form-field>
-      <input
-        type="text"
-        ngModel
-        matInput
-        placeholder="Username"
-        name="username"
-        [(ngModel)]="user.username"
-        #usernameInput="ngModel"
-      />
+            <mat-error *ngIf="item_nameInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
 
-    </mat-form-field>
+          <mat-form-field>
+            <input
+              type="number"
+              [(ngModel)]="basePrice"
+              matInput
+              placeholder="Base price . . ."
+              name="basePrice"
+              #basePriceInput="ngModel"
+              required
+            />
 
-    <mat-form-field hintLabel="Please enter minimum 8 characters">
-      <input
-        type="password"
-        ngModel
-        matInput
-        placeholder="Password"
-        name="password"
-        required
-        #userInput="ngModel"
-      />
-      <mat-hint align="end"> {{ userInput.value?.length }} / 8</mat-hint>
-    </mat-form-field>
+            <mat-error *ngIf="basePriceInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
 
-    <button type="submit" mat-raised-button color="warn" [disabled]="f.invalid">
-      Submit
-    </button>
+          <mat-form-field>
+            <input
+              type="number"
+              [(ngModel)]="amount"
+              matInput
+              placeholder="Amount . . ."
+              name="amount"
+              #amountInput="ngModel"
+              required
+            />
 
-    <mat-label *ngIf="errorExists">{{ errorText }}</mat-label>
-    <a routerLink="/register">I do not have an account</a>
-  </form>
+            <mat-error *ngIf="amountInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              type="number"
+              [(ngModel)]="level"
+              matInput
+              placeholder="level . . ."
+              name="level"
+              #leveltInput="ngModel"
+              required
+            />
+
+            <mat-error *ngIf="leveltInput.hasError('required')"
+              >Field should not be empty</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Select item category</mat-label>
+            <mat-select matInput name="category" [(ngModel)]="category" #categoryInput="ngModel" required>
+              <mat-optgroup
+                *ngFor="let category of categories"
+                [label]="category.name"
+                [disabled]="category.disabled"
+              >
+                <mat-option
+                  *ngFor="let subcategory of category.children"
+                  [value]="subcategory"
+                >
+                  {{ subcategory.name }}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+            <mat-error *ngIf="categoryInput.hasError('required')">Please choose an animal</mat-error>
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Select item trait</mat-label>
+            <mat-select matInput name="trait" [(ngModel)]="trait" #traitInput="ngModel" required>
+                <mat-option
+                  *ngFor="let trait of traits"
+                  [value]="trait"
+                >
+                  {{ trait.traitName }}
+                </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="traitInput.hasError('required')">Please choose a trait</mat-error>
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Select item quality</mat-label>
+            <mat-select matInput name="quality" [(ngModel)]="quality" #qualityInput="ngModel" required>
+                <mat-option
+                  *ngFor="let quality of qualities"
+                  [value]="quality"
+                >
+                  {{ quality.qualityName }}
+                </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="qualityInput.hasError('required')">Please choose a quality</mat-error>
+            <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
+          </mat-form-field>
+
+          <button
+            type="submit"
+            mat-raised-button
+            color="warn"
+            [disabled]="f.invalid"
+          >
+            Submit
+          </button>
+
+          <!-- <mat-label *ngIf="errorExists">{{ errorText }}</mat-label> -->
+        </form>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="My previous purchases">
+
+      <mat-table [dataSource]="purchases" matSort>
+        <ng-container matColumnDef="itemName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Item name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.itemName }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="level">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Item level</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.level | number }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Item owner</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.owner.username }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dateCreated">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Date of creation</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.dateCreated | date}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="basePrice">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Unit price</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.basePrice | number}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Amount of given item</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.amount | number}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>In total</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.basePrice * element.amount| number}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let rows; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+    </mat-tab>
+
+  </mat-tab-group>
 </section>

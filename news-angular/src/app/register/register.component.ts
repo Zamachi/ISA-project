@@ -25,7 +25,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.countryService.findAllCountries().subscribe(
-      value => { this.countries = value.body.map( country => country.name ) }
+      value => {
+        console.log(value); this.countries = value.body.map( country => country.name );
+      }
 
     );
   }
