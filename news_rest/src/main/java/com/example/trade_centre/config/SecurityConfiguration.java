@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/user/createaccount").permitAll()
             .antMatchers("/category/findallcategories").permitAll()
-            .antMatchers("/items/findallitems", "/items/finditemsbyslug", "/items/finditemsbyname").permitAll()
+            .antMatchers("/items/findallitems", "/items/finditemsbyslug", "/items/finditemsbyname", "/traits/getalltraits", "/quality/getallqualities", "/category/findallcategories", "/roles/getallroles").permitAll()
             .antMatchers("/admin/*").hasAuthority("ROLE_ADMIN")
             .antMatchers("/auth/loginuser").permitAll()
             .anyRequest().authenticated() //NOTE: autentikacija na nivou tokena

@@ -37,6 +37,9 @@ export class LoginComponent implements OnInit {
           this.sessionService.loadSession(this.dataResponse);
           this.userService.log_user_in();
 
+          if(data.body.userRoles.find( role => (String) (role.roleName).toLowerCase() == 'role_admin'))
+            this.userService.make_admin();
+
           this.route.navigate(['/home']);
         }
       })

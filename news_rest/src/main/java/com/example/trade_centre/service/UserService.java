@@ -27,8 +27,6 @@ public class UserService implements iUserService, UserDetailsService{
     @Autowired
     private iUserRepository userRepository;
     @Autowired
-    private AutoMapperService autoMapperService;
-    @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private RolesService rolesService;

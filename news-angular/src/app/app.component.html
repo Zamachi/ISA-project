@@ -43,7 +43,7 @@
         &nbsp;
         <span> | </span>
         &nbsp;
-        <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" routerLink="/admin-panel">Admin panel</a>
+        <a *ngIf="(isAdmin$ | async) as isAdmin" routerLink="/admin-panel">Admin panel</a>
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" routerLink="/profile">Profile</a>
         <a *ngIf="(isLoggedIn$ | async) as isLoggedIn" (click)="logout()" routerLink="/logout">Logout</a>
 

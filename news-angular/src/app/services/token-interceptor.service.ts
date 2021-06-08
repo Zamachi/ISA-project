@@ -18,6 +18,9 @@ export class TokenInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if(req.url.includes("restcountries")){
+      return next.handle(req);
+    }
     const userToken = localStorage.getItem('token')
       ? localStorage.getItem('token')
       : '';
@@ -42,5 +45,6 @@ export class TokenInterceptorService implements HttpInterceptor {
         return throwError(errorMsg);
       })
     );
-  }
+    }
+
 }

@@ -37,7 +37,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     private itemService: ItemsService,
     private _snackBar: MatSnackBar,
     private router: Router
-  ) { this.complexServich = this.router.getCurrentNavigation().extras.state;}
+  ) {
+    this.complexServich = this.router.getCurrentNavigation().extras.state;
+  }
 
   ngAfterViewInit(): void {
     this.items.sort = this.sort;

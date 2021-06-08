@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserService {
 
   private isLoggedIn = new BehaviorSubject<boolean>(false);
-
+  private isAdmin = new BehaviorSubject<boolean>(false);
   constructor(private client:HttpClient) { }
 
   registerUser(username: String, password: String, email: String, country: String) : Observable<HttpResponse<any>>{
@@ -53,4 +53,19 @@ export class UserService {
     this.isLoggedIn.next(false);
   }
 
+  getIsAdmin() : BehaviorSubject<boolean>{
+    for (let index = 0; index < localStorage.length; index++) {
+      if( localStorage.length>0 && localStorage.getItem("role-"+index) != null && localStorage.getItem("role-"+index).valueOf() == "ROLE_ADMIN" )
+        this.make_admin();
+    }
+
+    return this.isAdmin;
+  }
+
+  make_admin(){
+    return this.isAdmin.next(true);
+  }
+  remove_admin(){
+    return this.isAdmin.next(false);
+  }
 }

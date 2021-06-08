@@ -21,6 +21,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CategoryService } from './services/category.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthguardService } from './services/guards/authguard.service';
+import { DoubleAuthGuardService } from './services/guards/double-auth-guard.service';
+import { RoleGuardService } from './services/guards/role-guard.service';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     ItemsService,
     SessionService,
     CategoryService,
-  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true} ],
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
+  AuthguardService,
+DoubleAuthGuardService,
+RoleGuardService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,32 +6,34 @@
 >
   <h1>Welcome to the trade centre!</h1>
 
-  <mat-tab-group>
+  <mat-tab-group mat-stretch-tabs>
     <mat-tab label="Simple search">
       <p style="text-align: center">Simple search:</p>
       <br />
       <form
-        fxLayout="column"
+        fxLayout="row"
         fxLayoutAlign="center center"
         fxLayoutGap="20px"
         #formSimple="ngForm"
         (ngSubmit)="onSubmitSimple(formSimple)"
       >
-        <mat-form-field appearance="fill">
-          <input
-            type="search"
-            ngModel
-            matInput
-            placeholder="Search for..."
-            name="simpleSearch"
-          />
-          <mat-icon>search</mat-icon>
-        </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <input
+        type="search"
+        ngModel
+        matInput
+        placeholder="Search for..."
+        name="simpleSearch"
+        />
+      </mat-form-field>
+
+
       </form>
     </mat-tab>
 
     <mat-tab label="Advanced serach">
-      <p>Advanced serach</p>
+      <p style="text-align: center">Advanced serach</p>
 
       <form
         fxLayout="column"
@@ -48,7 +50,6 @@
             placeholder="Search for..."
             name="search"
           />
-          <mat-icon>search</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
