@@ -5,10 +5,14 @@ import com.example.trade_centre.model.ItemModel;
 import com.example.trade_centre.repository.iItemsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service()
@@ -20,6 +24,8 @@ public class ItemsService implements iItemsService{
     private ModelMapper modelMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public Item insert(ItemModel itemModel) {
@@ -91,5 +97,33 @@ public class ItemsService implements iItemsService{
         List<ItemModel> to_return = moji_itemi.stream().map(item -> modelMapper.map(item, ItemModel.class)).collect(Collectors.toList());
 
         return to_return;
+    }
+
+    @Override
+    public List<ItemModel> findAllByComplex(Map<String, String> criteria) {
+
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("sold").is(false));
+
+        if(!criteria.get("search").equals(""))
+            query.addCriteria(Criteria.where("itemName").regex( criteria.get("search") ) );
+
+        if( !criteria.get("category").toLowerCase().equals("any") )
+            query.addCriteria(Criteria.where("category.name").regex( criteria.get("category") ));
+
+        if( !criteria.get("trait").toLowerCase().equals("any") )
+            query.addCriteria(Criteria.where("trait.traitName").regex( criteria.get("trait") ));
+
+        if( !criteria.get("quality").toLowerCase().equals("any") )
+            query.addCriteria(Criteria.where("quality.qualityName").regex( criteria.get("quality") ));
+
+        query.addCriteria(Criteria.where("level").lt( Integer.parseInt(criteria.get("levelHigh"))+1).gt( Integer.parseInt( criteria.get("levelLow"))-1));
+        query.addCriteria(Criteria.where("amount").lt( Integer.parseInt(criteria.get("amountHigh"))+1 ).gt( Integer.parseInt(criteria.get("amountLow"))-1));
+        query.addCriteria(Criteria.where("basePrice").lt( Integer.parseInt(criteria.get("priceHigh"))+1 ).gt( Integer.parseInt(criteria.get("priceLow"))-1 ) );
+
+        var results = mongoTemplate.find(query, Item.class);
+
+        return results.stream().map( item -> modelMapper.map(item, ItemModel.class) ).collect(Collectors.toList());
     }
 }

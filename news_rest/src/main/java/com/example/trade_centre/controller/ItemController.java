@@ -66,4 +66,10 @@ public class ItemController {
         return itemsService.findAllByBuyer(username);
     }
 
+    @PostMapping("complexsearch")
+    @CrossOrigin(origins = "*")
+    private List<ItemModel> complexSearch(@RequestBody Map<String, String> json){
+        return itemsService.findAllByComplex(json);
+    }
+
 }

@@ -2,6 +2,11 @@ import { Options } from '@angular-slider/ngx-slider';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap, NavigationExtras } from '@angular/router';
+import { Quality } from '../models/quality';
+import { Trait } from '../models/trait';
+import { CategoryService } from '../services/category.service';
+import { QualityService } from '../services/quality.service';
+import { TraitService } from '../services/trait.service';
 
 @Component({
   selector: 'app-home',
@@ -15,33 +20,17 @@ export class HomeComponent implements OnInit {
 
   kontrolaForme = new FormControl();
 
-  categories = [ //TODO: zameniti sa servisom koji dovlaci kategorije
-    {
-      name: 'weapons',
-      subcategory: [
-        { value: 'axe-0', viewValue: 'Axe' },
-        { value: 'sword-1', viewValue: 'Sword' },
-        { value: 'mace-2', viewValue: 'Mace' },
-      ],
-    },
-    {
-      name: 'armors',
-      subcategory: [
-        { value: 'light-0', viewValue: 'Light' },
-        { value: 'heavy-1', viewValue: 'Heavy' },
-        { value: 'medium-2', viewValue: 'Medium' },
-      ],
-    },
-  ];
+  //NOTE: Arrays
+  categories: any;
+  traits: Array<Trait>;
+  qualities: Array<Quality>;
+  //NOTE: Arrays
 
-  traits: Array<String> = ['test'];
-  qualities: Array<String> = ['test'];
-
-  levelSliderLow: Number = 0;
-  levelSliderHigh: Number = 100;
+  levelSliderLow: Number = 1;
+  levelSliderHigh: Number = 50;
   levelSliderOption: Options = {
-    floor: 0,
-    ceil: 100,
+    floor: 1,
+    ceil: 50,
   };
 
   amountSliderLow: Number = 1;
@@ -58,9 +47,44 @@ export class HomeComponent implements OnInit {
     ceil: 1000000,
   };
 
-  constructor(private route: Router) {}
+  constructor(private route: Router,
+    private categoryService: CategoryService,
+    private traitService: TraitService,
+    private qualityService: QualityService) {
+
+    }
 
   ngOnInit(): void {
+
+    this.qualityService.findAllQualities().subscribe((data) => {
+      this.qualities = data.body;
+    });
+
+    this.traitService.findAllTraits().subscribe((data) => {
+      this.traits = data.body;
+    });
+
+    this.categoryService.findAllCategories().subscribe((data) => {
+      let parents = data.body.map((value) => value.parent);
+
+      let new_parents = parents
+        .map((value) => value?.name)
+        .filter((value) => value !== undefined)
+        .filter((value, index, self) => self.indexOf(value) === index);
+
+      let new_parents_01: any = [];
+
+      new_parents.forEach((value, index, self) => {
+        let children: any = data.body
+          .filter((value) => value.parent !== null)
+          .filter((valueNotNull) => valueNotNull.parent.name == value);
+
+        // console.log(children);
+        new_parents_01.push({ name: value, children: children });
+      }, new_parents_01);
+
+      this.categories = new_parents_01;
+    });
 
   }
 
@@ -69,6 +93,25 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
+    const search = form.value.search;
+    const category = form.value.category;
+    const trait = form.value.trait;
+    const quality = form.value.quality;
+
+    const complexSearch = {
+      "search": search,
+      "category": typeof(category) === 'string' ? category:category.name,
+      "trait":typeof(trait) === 'string' ? trait:trait.traitName,
+      "quality":typeof(quality) === 'string' ? quality:quality.qualityName,
+      "levelLow":form.value.level[0],
+      "levelHigh":form.value.level[1],
+      "amountLow":form.value.amount[0],
+      "amountHigh":form.value.amount[1],
+      "priceLow":form.value.price[0],
+      "priceHigh":form.value.price[1]
+    };
+
+    this.route.navigateByUrl("/items/complexSearch/", {state :complexSearch});
   }
 
 }

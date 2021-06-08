@@ -59,5 +59,14 @@ export class ItemsService {
     return this.client.get<any>(url, { observe: 'response' });
 
   }
+  public complexSearch(complexParams:Object): Observable<HttpResponse<any>>{
+
+    const url = "http://localhost:8080/items/complexsearch";
+
+    // console.log(complexParams);
+    // return null;
+    return this.client.post<any>(url, complexParams, { observe: 'response' });
+
+  }
 
 }

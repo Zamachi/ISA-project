@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'items/search/:slug', component: SearchComponent },
   { path: 'admin-panel', component: AdminPanelComponent },
   { path: 'logout', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'items/complexSearch/:complexSearch', component: SearchComponent }
 ];
 
 @NgModule({

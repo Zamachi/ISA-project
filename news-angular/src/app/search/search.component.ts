@@ -11,23 +11,22 @@ import { ItemsService } from '../services/items.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
-
   items = new MatTableDataSource<Item>();
-  ItemName: String;
   slug: String;
   loggedInUser: String;
+  complexServich: any;
   displayedColumns = [
-    "itemName",
-    "level",
-    "owner",
-    "dateCreated",
-    "basePrice",
-    "amount",
-    "total",
-    "buy?"
+    'itemName',
+    'level',
+    'owner',
+    'dateCreated',
+    'basePrice',
+    'amount',
+    'total',
+    'buy?',
   ];
 
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +37,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     private itemService: ItemsService,
     private _snackBar: MatSnackBar,
     private router: Router
-    ) { }
+  ) { this.complexServich = this.router.getCurrentNavigation().extras.state;}
 
   ngAfterViewInit(): void {
     this.items.sort = this.sort;
@@ -46,58 +45,86 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loggedInUser = localStorage.length > 0 ? localStorage.getItem("username"):"";
-    this.activeRoute.params.subscribe(value => {
-      this.ItemName = value['ItemName'];
+    this.loggedInUser =
+      localStorage.length > 0 ? localStorage.getItem('username') : '';
+    this.activeRoute.params.subscribe((value) => {
       this.slug = value['slug'];
-    })
+    });
 
-    if(this.ItemName != undefined && this.ItemName != ''){
-      this.findAllByItemName;
-    }
-    else if(this.slug != undefined && this.slug != ''){
-
+    if (this.complexServich != undefined && this.complexServich != '' && this.complexServich != null) {
+        // console.log(this.complexServich);
+      this.complexSearch(this.complexServich);
+    } else if (this.slug != undefined && this.slug != '') {
       this.findAllBySlug();
-    }else{
+    } else {
       this.findAll();
     }
   }
 
-  private findAll() : any {
-    return this.itemService.findAll().subscribe(value => { this.items.data = value.body;  });
+  private findAll(): any {
+    return this.itemService.findAll().subscribe((value) => {
+      this.items.data = value.body;
+    });
   }
 
-  private findAllBySlug() : any {
-    return this.itemService.findAllBySlug(this.slug.toString()).subscribe(value => { this.items.data = value.body as Item[]; });
+  private findAllBySlug(): any {
+    return this.itemService
+      .findAllBySlug(this.slug.toString())
+      .subscribe((value) => {
+        this.items.data = value.body as Item[];
+      });
   }
-  private findAllByItemName() : any {
-    return this.itemService.findAllByItemName(this.ItemName.toString()).subscribe(value => { this.items.data = value.body as Item[]; });
+  private complexSearch(item): any {
+    return this.itemService
+      .complexSearch(item)
+      .subscribe((value) => {
+        this.items.data = value.body as Item[];
+      });
   }
 
-  doFilter(filterValue: string){
+  doFilter(filterValue: string) {
     this.items.filter = filterValue.trim().toLowerCase();
   }
 
-  buyComponent(username: String, item_id: String, item_price: Number, amount: Number){
+  buyComponent(
+    username: String,
+    item_id: String,
+    item_price: Number,
+    amount: Number
+  ) {
     // console.log(username, item_id);
-    if(username == "" || username == null || username == "null" ){
-      this._snackBar.open("You have to log in to be able to buy!", "Close", { duration: 3000});
+    if (username == '' || username == null || username == 'null') {
+      this._snackBar.open('You have to log in to be able to buy!', 'Close', {
+        duration: 3000,
+      });
       localStorage.clear();
-      this.router.navigate(["/login"]);
-    }
-    else if( ( (Number) (localStorage.getItem("goldAmount")) - item_price.valueOf()*amount.valueOf() < 0)  ){
-      this._snackBar.open("You don't have enough gold to buy this item!", "Close", { duration: 3000});
-
-    }
-    else{
-      // console.log("Ulogovani ste");
-      this.itemService.buyItem(username, item_id).subscribe(
-        data => {
-          if(data.ok)
-            this._snackBar.open("Successfully bought item!", "Close", { duration: 3000 });
-        }
+      this.router.navigate(['/login']);
+    } else if (
+      Number(localStorage.getItem('goldAmount')) -
+        item_price.valueOf() * amount.valueOf() <
+      0
+    ) {
+      this._snackBar.open(
+        "You don't have enough gold to buy this item!",
+        'Close',
+        { duration: 3000 }
       );
+    } else {
+      // console.log("Ulogovani ste");
+      this.itemService.buyItem(username, item_id).subscribe((data) => {
+        if (data.ok)
+          localStorage.setItem(
+            'goldAmount',
+            String(
+              Number(localStorage.getItem('goldAmount')) -
+                item_price.valueOf() * amount.valueOf()
+            )
+          );
+
+        this._snackBar.open('Successfully bought item!', 'Close', {
+          duration: 3000,
+        });
+      });
     }
   }
-
 }
