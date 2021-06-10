@@ -23,7 +23,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="warn" fxLayoutGap="15px">
+    <mat-toolbar color="accent" fxLayoutGap="15px">
       <div fxHide.gt-xs>
         <button (click)="sidenav.toggle()" mat-mini-fab color="primary">
           <mat-icon>menu</mat-icon>
@@ -57,7 +57,7 @@
     </mat-toolbar>
     <router-outlet></router-outlet>
 
-    <footer>
+    <footer color="accent" class="mat-accent">
       <div id="footer">Copyright &copy; Stefan Dimitrijević - ISA project</div>
     </footer>
   </mat-sidenav-content>

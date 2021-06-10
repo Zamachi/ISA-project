@@ -47,7 +47,6 @@ public class AuthController {
             return ResponseEntity.ok()
                     .header("Access-Control-Expose-Headers", HttpHeaders.AUTHORIZATION)
                     .header("Access-Control-Allow-Headers", HttpHeaders.AUTHORIZATION)
-//                    .header("Access-Control-Allow-Origin", "*")
                     .header(HttpHeaders.AUTHORIZATION, jwtTokenUtill.generateAccessToken(user) )
                     .body( modelMapper.map( user, UserModel.class ) );
         } catch (BadCredentialsException ex){

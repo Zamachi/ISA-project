@@ -39,7 +39,7 @@
   <ng-container matColumnDef="buy?">
     <mat-header-cell *matHeaderCellDef >Buy item</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <button mat-raised-button color="warn" *ngIf="element.owner.username != loggedInUser" (click)="buyComponent(loggedInUser, element.id, element.basePrice, element.amount )">Buy</button>
+      <button mat-raised-button color="accent" *ngIf="element.owner.username != loggedInUser" (click)="buyComponent(loggedInUser, element.id, element.basePrice, element.amount )">Buy</button>
     </mat-cell>
   </ng-container>
 
