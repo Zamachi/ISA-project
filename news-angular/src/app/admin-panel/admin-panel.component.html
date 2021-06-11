@@ -71,7 +71,7 @@
 
           <mat-form-field *ngIf="radio.value == 'update' && updateCategory">
             <mat-label>Select that category's parent</mat-label>
-            <mat-select [(ngModel)]="updateCategoryParent" name="updateCategoryParent" required>
+            <mat-select [(ngModel)]="updateCategoryParent" name="updateCategoryParent">
               <mat-option [value]="null">--</mat-option>
               <mat-option *ngFor="let category of categories" [value]="category">
                 {{category.name}}
