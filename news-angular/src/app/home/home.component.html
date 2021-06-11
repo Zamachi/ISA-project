@@ -6,7 +6,7 @@
 >
   <h1>Welcome to the trade centre!</h1>
 
-  <mat-tab-group mat-stretch-tabs>
+  <mat-tab-group dynamicHeight mat-stretch-tabs>
     <mat-tab label="Simple search">
       <p style="text-align: center">Simple search:</p>
       <br />
@@ -17,18 +17,15 @@
         #formSimple="ngForm"
         (ngSubmit)="onSubmitSimple(formSimple)"
       >
-
-      <mat-form-field appearance="fill">
-        <input
-        type="search"
-        ngModel
-        matInput
-        placeholder="Search for..."
-        name="simpleSearch"
-        />
-      </mat-form-field>
-
-
+        <mat-form-field appearance="fill">
+          <input
+            type="search"
+            ngModel
+            matInput
+            placeholder="Search for..."
+            name="simpleSearch"
+          />
+        </mat-form-field>
       </form>
     </mat-tab>
 
@@ -54,7 +51,13 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Select item category</mat-label>
-          <mat-select matInput name="category" [(ngModel)]="selectedCategory" #selectedCategoryInput="ngModel" required>
+          <mat-select
+            matInput
+            name="category"
+            [(ngModel)]="selectedCategory"
+            #selectedCategoryInput="ngModel"
+            required
+          >
             <mat-option value="any">Any category</mat-option>
             <mat-optgroup
               *ngFor="let category of categories"
@@ -69,12 +72,14 @@
               </mat-option>
             </mat-optgroup>
           </mat-select>
-          <mat-error *ngIf="selectedCategoryInput.hasError('required')">Please choose a category</mat-error>
+          <mat-error *ngIf="selectedCategoryInput.hasError('required')"
+            >Please choose a category</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Select a trait</mat-label>
-          <mat-select [(ngModel)]="selectedTrait"  name="trait">
+          <mat-select [(ngModel)]="selectedTrait" name="trait">
             <mat-option value="any">Any trait</mat-option>
             <mat-option *ngFor="let trait of traits" [value]="trait">{{
               trait.traitName
@@ -86,11 +91,9 @@
           <mat-label>Select a quality</mat-label>
           <mat-select [(ngModel)]="selectedQuality" name="quality">
             <mat-option value="any">Any quality</mat-option>
-            <mat-option
-              *ngFor="let quality of qualities"
-              [value]="quality"
-              >{{ quality.qualityName }}</mat-option
-            >
+            <mat-option *ngFor="let quality of qualities" [value]="quality">{{
+              quality.qualityName
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
 

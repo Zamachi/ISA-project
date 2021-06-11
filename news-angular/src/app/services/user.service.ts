@@ -9,6 +9,7 @@ export class UserService {
 
   private isLoggedIn = new BehaviorSubject<boolean>(false);
   private isAdmin = new BehaviorSubject<boolean>(false);
+  private goldAmount = new BehaviorSubject<number>(-1);
   constructor(private client:HttpClient) { }
 
   registerUser(username: String, password: String, email: String, country: String) : Observable<HttpResponse<any>>{
@@ -68,4 +69,24 @@ export class UserService {
   remove_admin(){
     return this.isAdmin.next(false);
   }
+
+  getGold() : BehaviorSubject<number>{
+
+    if( (Number) (localStorage.getItem("goldAmount")) > -1){
+      this.setGold((Number) (localStorage.getItem("goldAmount")));
+    }
+
+    return this.goldAmount;
+  }
+
+  setGold(number: number){
+    this.goldAmount.next(number);
+  }
+
+  unsetGold(){
+    this.goldAmount.next(-1);
+  }
+
+
+
 }

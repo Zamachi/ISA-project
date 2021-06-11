@@ -77,6 +77,10 @@ public class ItemsService implements iItemsService{
         new_item.setSold( true );
         new_item.setBuyer( buyer );
 
+        var owner = userService.findByUsername( new_item.getOwner().getUsername() );
+        owner.setGoldAmount( owner.getGoldAmount() + new_item.getBasePrice() * new_item.getAmount() );
+        userService.save(owner);
+
         buyer.setGoldAmount(buyer.getGoldAmount() - new_item.getBasePrice() * new_item.getAmount() );
 
         userService.save(buyer);

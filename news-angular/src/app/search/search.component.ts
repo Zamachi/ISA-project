@@ -92,7 +92,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     username: String,
     item_id: String,
     item_price: Number,
-    amount: Number
+    amount: Number,
+    event: any
   ) {
     // console.log(username, item_id);
     if (username == '' || username == null || username == 'null') {
@@ -126,7 +127,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this._snackBar.open('Successfully bought item!', 'Close', {
           duration: 3000,
         });
+
+        this.items.data.splice(event,1);
+        this.items._updateChangeSubscription();
       });
     }
   }
+
+
 }

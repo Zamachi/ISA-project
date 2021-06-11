@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
           if(data.body.userRoles.find( role => (String) (role.roleName).toLowerCase() == 'role_admin'))
             this.userService.make_admin();
 
+          this.userService.setGold((Number) (localStorage.getItem("goldAmount")));
+
           this.route.navigate(['/home']);
         }
       })

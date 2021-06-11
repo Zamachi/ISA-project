@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Category } from '../models/category';
 import { Item } from '../models/item';
 import { Quality } from '../models/quality';
@@ -60,7 +62,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private categoryService: CategoryService,
     private traitService: TraitService,
     private qualityService: QualityService,
-    private itemService: ItemsService
+    private itemService: ItemsService,
+    private snackBar: MatSnackBar
   ) {}
   ngAfterViewInit(): void {
     this.purchases.sort = this.sort;
@@ -115,6 +118,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       "trait":form.value.trait,
       "quality":form.value.quality,
       "owner":{"username": localStorage.getItem('username') }
-    }).subscribe();
+    }).subscribe( data =>{
+        if(data.status == 200){
+          this.snackBar.open("Item uploaded successfully!", "OK");
+          // location.reload();
+        }
+    } );
   }
 }

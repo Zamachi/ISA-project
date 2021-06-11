@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.countryService.findAllCountries().subscribe(
       value => {
-        console.log(value); this.countries = value.body.map( country => country.name );
+         this.countries = value.body.map( country => country.name );
       }
 
     );
@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit {
         if(data != null){
           this.data = data;
           this._snackBar.open("User "+this.data.username+" created!", "Close", {duration: 3000});
+          this.router.navigate(["/login"]);
         }else{
           this._snackBar.open("User cannot be created, user with a given username exists in the database!", "Close", {duration: 3000});
 
