@@ -63,8 +63,6 @@ export class ItemsService {
 
     const url = "http://localhost:8080/items/complexsearch";
 
-    // console.log(complexParams);
-    // return null;
     return this.client.post<any>(url, complexParams, { observe: 'response' });
 
   }
