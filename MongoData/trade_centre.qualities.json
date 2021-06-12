@@ -1,0 +1,5 @@
+{"_id":{"$oid":"60b961dee0ab4a3be0d90f2d"},"qualityName":"Normal","color":"gray"}
+{"_id":{"$oid":"60b961dee0ab4a3be0d90f2e"},"qualityName":"Fine","color":"green"}
+{"_id":{"$oid":"60b961dee0ab4a3be0d90f2f"},"qualityName":"Superior","color":"blue"}
+{"_id":{"$oid":"60b961dee0ab4a3be0d90f30"},"qualityName":"Epic","color":"purple"}
+{"_id":{"$oid":"60b961dee0ab4a3be0d90f31"},"qualityName":"Legendary","color":"gold"}

@@ -1,0 +1,8 @@
+{"_id":{"$oid":"60b5655722033a85c80193d7"},"name":"Weapons","slug":"Weapons","_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60b682dbd8f60670e62bc108"},"name":"Sword","slug":"Weapons-Sword","parent":{"name":"Weapons"},"_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60b6830bd8f60670e62bc109"},"name":"Axe","slug":"Weapons-Axe","parent":{"name":"Weapons"},"_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60b68330d8f60670e62bc10a"},"name":"Dagger","slug":"Weapons-Dagger","parent":{"name":"Weapons"},"_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60bd3edee1f4e75e5d4514a0"},"name":"Armours","slug":"Armours","_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60bd43c3e1f4e75e5d4514a1"},"name":"Accessories","slug":"Accessories","_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60bd43cde1f4e75e5d4514a2"},"name":"Earrings","slug":"accessories-earrings","parent":{"_id":{"$oid":"60bd43c3e1f4e75e5d4514a1"},"name":"Accessories","slug":"Accessories"},"_class":"com.example.trade_centre.entity.Category"}
+{"_id":{"$oid":"60bd45e10b34cc221a51777c"},"name":"Rings","slug":"accessories-rings","parent":{"_id":{"$oid":"60bd43c3e1f4e75e5d4514a1"},"name":"Accessories","slug":"Accessories"},"_class":"com.example.trade_centre.entity.Category"}
